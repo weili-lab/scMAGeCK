@@ -43,7 +43,7 @@ select_target_gene<-function(rds_object, bc_frame,perturb_gene, non_target_ctrl,
   # automatically adjust the number of min genes
   nround=0
   while(TRUE){
-    deframe=FindMarkers(rds_object,ident.1='Perturbed',indent.2='Ctrl',
+    deframe=FindMarkers(rds_object,ident.1='Perturbed',ident.2='Ctrl',
 		      group.by='scmageck_perturbed_marker',
                       logfc.threshold = logfc.threshold)
   
