@@ -15,10 +15,10 @@ assign_cell_identity <- function(BARCODE, RDS, ASSIGNMETHOD='unique') {
   if (is.character(RDS)) {
     message(paste("Reading RDS file:", RDS))
     RDS= readRDS(RDS)
-  } else {
-    # targetobj = RDS
   }
-  
+  # ensure the object is compatible with the installed Seurat version
+  RDS = UpdateSeuratObject(RDS)
+
   if (ASSIGNMETHOD == "unique") {
 	  
     message("Only assign unique cells")

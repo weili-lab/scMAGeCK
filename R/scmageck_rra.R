@@ -3,17 +3,11 @@ scmageck_rra <- function(BARCODE, RDS, GENE, RRAPATH = NULL, LABEL = NULL, NEGCT
   message('Testing Rcpp:')
   #z=rcpp_hello_world()
   #message(str(z))
-  if (is.null(RRAPATH)) {
-    RRAPATH = system.file("bin", "RRA", package = "scMAGeCK")
-  }
-  message("Checking RRA...")
-  if (!file.exists(RRAPATH)) {
-    if (system('RRA', ignore.stdout = TRUE, ignore.stderr = TRUE)!=0) {
-      message("RRA does not exist! Please check RRA executable file path")
-      #return(NULL)
-    } else {
-      RRAPATH=NULL # if RRA already exists
-    }
+  # Since v1.5.1 the RRA algorithm is built in via Rcpp (call_rra); no external
+  # RRA executable is required. Only validate a user-supplied RRAPATH.
+  if (!is.null(RRAPATH) && !file.exists(RRAPATH)) {
+    message("Provided RRAPATH not found; falling back to the built-in RRA.")
+    RRAPATH = NULL
   }
   if (!is.null(LABEL)) {
     data_label = LABEL
@@ -82,6 +76,8 @@ scmageck_rra <- function(BARCODE, RDS, GENE, RRAPATH = NULL, LABEL = NULL, NEGCT
   } else {
     targetobj = RDS
   }
+  # ensure the object is compatible with the installed Seurat version
+  targetobj = UpdateSeuratObject(targetobj)
   # check if names are consistent
   nmatch = sum(bc_dox[, 1] %in% colnames(x = targetobj))
   if (nmatch == 0) {
