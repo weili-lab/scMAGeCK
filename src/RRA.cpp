@@ -20,6 +20,7 @@
 #include <map>
 #include <iostream>
 #include <fstream>
+#include <Rcpp.h>
 #include <algorithm>
 
 using namespace std;
@@ -100,7 +101,7 @@ int loadControlSeq(const char* fname){
   ifstream fh;
   fh.open(fname);
   if(!fh.is_open()){
-    cerr<<"Error opening "<<fname<<endl;
+    Rcpp::Rcerr<<"Error opening "<<fname<<endl;
   }
   string oneline;
   int ncount=0;
@@ -113,7 +114,7 @@ int loadControlSeq(const char* fname){
     }
     //oneline.erase( remove(oneline.begin(), oneline.end(), '\r'), oneline.end() );
     //oneline.erase( remove(oneline.begin(), oneline.end(), '\n'), oneline.end() );
-    //cout<<oneline<<"#"<<oneline.size()<<endl;
+    //Rcpp::Rcout<<oneline<<"#"<<oneline.size()<<endl;
     ControlSeqMap[oneline]=ncount;
 
     ncount++;
@@ -121,7 +122,7 @@ int loadControlSeq(const char* fname){
   fh.close();
   ControlSeqPercentile = new double[ncount];
   for(int i=0;i<ncount;i++) ControlSeqPercentile[i]=-1.0;
-  cout<<ControlSeqMap.size()<<" control sequences loaded.\n";
+  Rcpp::Rcout<<ControlSeqMap.size()<<" control sequences loaded.\n";
   return 0;
 }
 
@@ -147,7 +148,7 @@ int RRA_main (vector<string> & argv) {
     return 0;
   }
   
-  printf("Welcome to RRA v %s.\n", RRA_VERSION);
+  Rprintf("Welcome to RRA v %s.\n", RRA_VERSION);
   inputFileName[0] = 0;
   outputFileName[0] = 0;
   maxPercentile = 0.1;
@@ -182,7 +183,7 @@ int RRA_main (vector<string> & argv) {
      }
      if (argv[i-1] == "--skip-gene"){
 	string sn(argv[i]);
-	cout<<"Skipping gene "<<sn<<" for permutation ..."<<endl;
+	Rcpp::Rcout<<"Skipping gene "<<sn<<" for permutation ..."<<endl;
        gene_to_skip[sn]=0;
      }
      if (argv[i-1] == "--min-percentage-goodsgrna"){
@@ -204,19 +205,19 @@ int RRA_main (vector<string> & argv) {
   
   if ((inputFileName[0]==0)||(outputFileName[0]==0))
   {
-    cerr<<"Error: input file or output file name not set.\n";
+    Rcpp::Rcerr<<"Error: input file or output file name not set.\n";
     PrintCommandUsage(argv[0].c_str());
     return -1;
   }
   
   if ((maxPercentile>1.0)||(maxPercentile<0.0))
   {
-    cerr<<("Error: maxPercentile should be within 0.0 and 1.0\n");
+    Rcpp::Rcerr<<("Error: maxPercentile should be within 0.0 and 1.0\n");
     return -1;
   }
   if ((minPercentile>1.0))
   {
-    cerr<<("Error: minPercentile should be less than 1.0\n");
+    Rcpp::Rcerr<<("Error: minPercentile should be less than 1.0\n");
     return -1;
   }
   
@@ -225,28 +226,28 @@ int RRA_main (vector<string> & argv) {
   assert(groups!=NULL);
   assert(lists!=NULL);
   
-  printf("Reading input file...\n");
+  Rprintf("Reading input file...\n");
   
   flag = ReadFile(inputFileName, groups, MAX_GROUP_NUM, &groupNum, lists, MAX_LIST_NUM, &listNum);
   
   if (flag<=0){
-    cerr<<"\nError: reading ranking file ...\n";
+    Rcpp::Rcerr<<"\nError: reading ranking file ...\n";
     return -1;
   }
   
-  cerr<<("Computing lo-values for each group...\n");
+  Rcpp::Rcerr<<("Computing lo-values for each group...\n");
   
   if (ProcessGroups(groups, groupNum, lists, listNum, minPercentile, maxPercentile)<=0)
   {
-      cerr<<("\nError: processing groups failed.\n");
+      Rcpp::Rcerr<<("\nError: processing groups failed.\n");
       return -1;
   }
   	
-  cerr<<("Computing false discovery rate...\n");
+  Rcpp::Rcerr<<("Computing false discovery rate...\n");
   	
   if(rand_passnum*groupNum<100000  && has_specified_rand_passnum_parameter==false){
     rand_passnum=100000/groupNum+1;
-    cout<<"Increase the number of permutations to "<<rand_passnum<<" to get precise p values. To avoid this, use the --permutation option.\n";
+    Rcpp::Rcout<<"Increase the number of permutations to "<<rand_passnum<<" to get precise p values. To avoid this, use the --permutation option.\n";
   }
   
   if(permutation_by_group){
@@ -256,26 +257,26 @@ int RRA_main (vector<string> & argv) {
   }
   if (i<=0)
   {
-     cerr<<("\nError: computing FDR failed.\n");
+     Rcpp::Rcerr<<("\nError: computing FDR failed.\n");
      return -1;
   }
   adjustFDR(groups,groupNum);
   	
-  cerr<<("Saving to output file...\n");
+  Rcpp::Rcerr<<("Saving to output file...\n");
   
   if (SaveGroupInfo(outputFileName, groups, groupNum)<=0)
   {
-     cerr<<("\nError: saving output file failed.\n");
+     Rcpp::Rcerr<<("\nError: saving output file failed.\n");
      return -1;
   }
   	
-  cerr<<("RRA completed.\n");
+  Rcpp::Rcerr<<("RRA completed.\n");
   
     for(i=0;i<groupNum;i++)
       delete[] groups[i].items;
     free(groups);
 
-    cerr<<("Groups deletion complete.\n");
+    Rcpp::Rcerr<<("Groups deletion complete.\n");
   
     for (i=0;i<listNum;i++)
     {
@@ -283,10 +284,10 @@ int RRA_main (vector<string> & argv) {
     }
     free(lists);
 
-    cerr<<("Lists deletion complete.\n");
+    Rcpp::Rcerr<<("Lists deletion complete.\n");
 
     if(UseControlSeq){
-       cerr<<("ControlSeqPercentile deletion complete.\n");
+       Rcpp::Rcerr<<("ControlSeqPercentile deletion complete.\n");
        delete[] ControlSeqPercentile;
     }
   
@@ -298,21 +299,21 @@ int RRA_main (vector<string> & argv) {
 void PrintCommandUsage(const char *command)
 {
 	//print the options of the command
-	printf("%s - Robust Rank Aggreation v %s.\n", command, RRA_VERSION);
-	printf("usage:\n");
-	printf("-i <input data file>. Format: <item id> <group id> <list id> <value> [<probability>] [<chosen>]\n");
-	printf("-o <output file>. Format: <group id> <number of items in the group> <lo-value> <false discovery rate>\n");
-	printf("-p <maximum percentile>. RRA only consider the items with percentile smaller than this parameter. Default=0.1\n");
-	printf("-P <minimum percentile>. RRA only consider the items with percentile greater than this parameter. Default=-1.0\n");
-	printf("--control <control_sgrna list>. A list of control sgRNA names.\n");
-	printf("--permutation <int>. The number of rounds of permutation. Increase this value if the number of genes is small. Default 100.\n");
-	printf("--no-permutation-by-group. By default, gene permutation is performed separately, by their number of sgRNAs. Turning this option will perform permutation on all genes together. This makes the program faster, but the p value estimation is accurate only if the number of sgRNAs per gene is approximately the same.\n");
-	printf("--skip-gene <gene_name>. Genes to skip from doing permutation. Specify it multiple times if you need to skip more than 1 genes.\n");
-	printf("--min-percentage-goodsgrna <min percentage>. Filter genes that have too few percentage of 'good sgrnas', or sgrnas that fall below the -p threshold. Must be a number between 0-1. Default 0 (do not filter genes).\n");
-	printf("--min-number-goodsgrna <min number>. Filter genes that have too few number of 'good sgrnas', or sgrnas that fall below the -p threshold. Must be an integer. Default 0 (do not filter genes). \n");
-	printf("--max-sgrnapergene-permutation <max number>. Only permute genes by group if the number of sgRNAs per gene is smaller than this number. This will save a lot of time if some regions are targeted by a large number of sgRNAs (usually hundreds). Must be an integer. Default 100. \n");
-	printf("example:\n");
-	printf("%s -i input.txt -o output.txt -p 0.1 \n", command);
+	Rprintf("%s - Robust Rank Aggreation v %s.\n", command, RRA_VERSION);
+	Rprintf("usage:\n");
+	Rprintf("-i <input data file>. Format: <item id> <group id> <list id> <value> [<probability>] [<chosen>]\n");
+	Rprintf("-o <output file>. Format: <group id> <number of items in the group> <lo-value> <false discovery rate>\n");
+	Rprintf("-p <maximum percentile>. RRA only consider the items with percentile smaller than this parameter. Default=0.1\n");
+	Rprintf("-P <minimum percentile>. RRA only consider the items with percentile greater than this parameter. Default=-1.0\n");
+	Rprintf("--control <control_sgrna list>. A list of control sgRNA names.\n");
+	Rprintf("--permutation <int>. The number of rounds of permutation. Increase this value if the number of genes is small. Default 100.\n");
+	Rprintf("--no-permutation-by-group. By default, gene permutation is performed separately, by their number of sgRNAs. Turning this option will perform permutation on all genes together. This makes the program faster, but the p value estimation is accurate only if the number of sgRNAs per gene is approximately the same.\n");
+	Rprintf("--skip-gene <gene_name>. Genes to skip from doing permutation. Specify it multiple times if you need to skip more than 1 genes.\n");
+	Rprintf("--min-percentage-goodsgrna <min percentage>. Filter genes that have too few percentage of 'good sgrnas', or sgrnas that fall below the -p threshold. Must be a number between 0-1. Default 0 (do not filter genes).\n");
+	Rprintf("--min-number-goodsgrna <min number>. Filter genes that have too few number of 'good sgrnas', or sgrnas that fall below the -p threshold. Must be an integer. Default 0 (do not filter genes). \n");
+	Rprintf("--max-sgrnapergene-permutation <max number>. Only permute genes by group if the number of sgRNAs per gene is smaller than this number. This will save a lot of time if some regions are targeted by a large number of sgRNAs (usually hundreds). Must be an integer. Default 100. \n");
+	Rprintf("example:\n");
+	Rprintf("%s -i input.txt -o output.txt -p 0.1 \n", command);
 	
 }
 
@@ -381,7 +382,7 @@ int ProcessGroups(GROUP_STRUCT *groups, int groupNum, LIST_STRUCT *lists, int li
     if(validsgs<=1){
       isallone=true;
     }
-    //printf("Gene: %s\n",groups[i].name);
+    //Rprintf("Gene: %s\n",groups[i].name);
     if(isallone){
       ComputeLoValue(tmpF, validsgs, groups[i].loValue, minPercentile,maxPercentile, groups[i].goodsgrnas);
     }else{
@@ -392,7 +393,7 @@ int ProcessGroups(GROUP_STRUCT *groups, int groupNum, LIST_STRUCT *lists, int li
       if(groups[i].controlsgs==groups[i].itemNum){
 	string sn(groups[i].name);
         gene_to_skip[sn]=1;
-	cout<<"Skipping gene "<<sn<<" for permutation ..."<<endl;
+	Rcpp::Rcout<<"Skipping gene "<<sn<<" for permutation ..."<<endl;
       }
     }
   }//end i loop
@@ -403,7 +404,7 @@ int ProcessGroups(GROUP_STRUCT *groups, int groupNum, LIST_STRUCT *lists, int li
   if(UseControlSeq){
     for(map<string,int>::iterator mit = ControlSeqMap.begin(); mit != ControlSeqMap.end(); mit++){
       if(ControlSeqPercentile[mit->second]<0){
-        cerr<<"Warning: sgRNA "<<mit->first<<" not found in the ranked list. \n";
+        Rcpp::Rcerr<<"Warning: sgRNA "<<mit->first<<" not found in the ranked list. \n";
         //ControlSeqPercentile[mit->second]=0.5;
       }
     }
@@ -526,12 +527,12 @@ int ComputeLoValue_Prob(double *percentiles,     //array of percentiles
   }
 
   
-  if(PRINT_DEBUG) printf("probs:");
+  if(PRINT_DEBUG) Rprintf("probs:");
   for(i=0;i<num;i++)
   {
-    if(PRINT_DEBUG) printf("%f,",probValue[i]);
+    if(PRINT_DEBUG) Rprintf("%f,",probValue[i]);
   }
-  if(PRINT_DEBUG) printf("\n");
+  if(PRINT_DEBUG) Rprintf("\n");
 
   accuLoValue=0.0;
   for (pid=1;pid<(1<<num);pid++)
@@ -571,10 +572,10 @@ int ComputeLoValue_Prob(double *percentiles,     //array of percentiles
       }
       real_i = real_i + 1;
      }
-    if(PRINT_DEBUG) printf("pid: %d, prob:%e, score: %f\n",pid,c_prob,tmpLoValue);
+    if(PRINT_DEBUG) Rprintf("pid: %d, prob:%e, score: %f\n",pid,c_prob,tmpLoValue);
     accuLoValue=accuLoValue+tmpLoValue*c_prob;
   }
-  if(PRINT_DEBUG) printf("total: %f\n",accuLoValue);
+  if(PRINT_DEBUG) Rprintf("total: %f\n",accuLoValue);
 
   loValue = accuLoValue;
 
@@ -596,7 +597,7 @@ int adjustFDR(GROUP_STRUCT *groups, int groupNum){
       ngn++;
     }
   }
-  cout<<"Number of genes under FDR adjustment: "<<ngn<<endl;
+  Rcpp::Rcout<<"Number of genes under FDR adjustment: "<<ngn<<endl;
   vector<double> pvalue_in;
   for(i=0;i<groupNum;i++){
     if(groups[i].isbad==0){
@@ -689,14 +690,14 @@ int ComputePermutationbyNumSG(GROUP_STRUCT *groups, int groupNum, double minPerc
         n_control++;
       }
     }
-    cout<<"Total # control sgRNAs: "<<n_control<<endl;
+    Rcpp::Rcout<<"Total # control sgRNAs: "<<n_control<<endl;
   }
   
   for(map<int,int>::iterator mii=itemNumMap.begin();mii!=itemNumMap.end();mii++){
     int sgrnanum=mii->first;
     if(sgrnanum<=max_sgnum_permutation_by_group){// to avoid permutations on genes with too many sgRNAs (take too much time)
       randLoValueNum = 0;
-      cout<<"Permuting genes with "<<sgrnanum<<" sgRNAs..."<<endl;
+      Rcpp::Rcout<<"Permuting genes with "<<sgrnanum<<" sgRNAs..."<<endl;
       for (i=0;i<scanPass;i++){
         for (j=0;j<groupNum;j++){
           int validsgs=0;
@@ -844,7 +845,7 @@ int ComputePermutation(GROUP_STRUCT *groups, int groupNum, double minPercentile,
         n_control++;
       }
     }
-    cout<<"Total # control sgRNAs: "<<n_control<<endl;
+    Rcpp::Rcout<<"Total # control sgRNAs: "<<n_control<<endl;
   }
   
   for (i=0;i<scanPass;i++){
