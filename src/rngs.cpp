@@ -33,6 +33,7 @@
  */
 
 #include <stdio.h>
+#include <R_ext/Print.h>
 #include <time.h>
 #include "rngs.h"
 
@@ -103,25 +104,17 @@ static int  initialized   = 0;          /* test for stream initialization */
  * Use this function to set the state of the current random number 
  * generator stream according to the following conventions:
  *    if x > 0 then x is the state (unless too large)
- *    if x < 0 then the state is obtained from the system clock
- *    if x = 0 then the state is to be supplied interactively
+ *    if x <= 0 then the state is obtained from the system clock
  * ---------------------------------------------------------------
+ * Note: reading a seed interactively from stdin is not safe inside an
+ * R package (it would hang non-interactive/batch runs), so x == 0 is
+ * treated the same as x < 0 (seed from the clock).
  */
 {
-  char ok = 0;
-
   if (x > 0)
     x = x % MODULUS;                       /* correct if x is too large  */
-  if (x < 0)                                 
-    x = ((unsigned long) time((time_t *) NULL)) % MODULUS;              
-  if (x == 0)                                
-    while (!ok) {
-      printf("\nEnter a positive integer seed (9 digits or less) >> ");
-      scanf("%ld", &x);
-      ok = (0 < x) && (x < MODULUS);
-      if (!ok)
-        printf("\nInput out of range ... try again\n");
-    }
+  if (x <= 0)
+    x = ((unsigned long) time((time_t *) NULL)) % MODULUS;
   seed[stream] = x;
 }
 
@@ -173,7 +166,7 @@ static int  initialized   = 0;          /* test for stream initialization */
   GetSeed(&x);                      /* get the state of stream 1       */
   ok = ok && (x == A256);           /* x should be the jump multiplier */    
   if (ok)
-    printf("\n The implementation of rngs.c is correct.\n\n");
+    Rprintf("\n The implementation of rngs.c is correct.\n\n");
   else
-    printf("\n\a ERROR -- the implementation of rngs.c is not correct.\n\n");
+    Rprintf("\n\a ERROR -- the implementation of rngs.c is not correct.\n\n");
 }

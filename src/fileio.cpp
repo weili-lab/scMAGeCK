@@ -4,6 +4,7 @@
 #include <map>
 #include <iostream>
 #include <fstream>
+#include <Rcpp.h>
 using namespace std;
 
 #include "fileio.h"
@@ -36,11 +37,12 @@ int getGroupListNum(char* fileName, GROUP_STRUCT* &groups, LIST_STRUCT* lists, i
   ifstream fh;
   fh.open(fileName);
   if(!fh.is_open()){
-    cerr<<"Error opening "<<fileName<<endl;
+    Rcpp::Rcerr<<"Error opening "<<fileName<<endl;
+    return -1;
   }
   string oneline;
   getline(fh,oneline);
-  
+
   vector<string> vwords;
   vector<string> vsubwords;
   wordNum=stringSplit(oneline," \t\r\n\v",vwords);
@@ -48,7 +50,7 @@ int getGroupListNum(char* fileName, GROUP_STRUCT* &groups, LIST_STRUCT* lists, i
   //fgets(tmpS, MAX_WORD_NUM*(MAX_NAME_LEN+1)*sizeof(char), fh);
   //wordNum = StringToWords(words, tmpS,MAX_WORD_NUM, MAX_NAME_LEN+1,  " \t\r\n\v\f");
   if (wordNum < 4 || wordNum > 6){
-    cerr<<"Error: incorrect input file format: <item id> <group id> <list id> <value> [<prob>] [iscounted]\n";
+    Rcpp::Rcerr<<"Error: incorrect input file format: <item id> <group id> <list id> <value> [<prob>] [iscounted]\n";
     fh.close();
     return -1;
   }
@@ -84,7 +86,7 @@ int getGroupListNum(char* fileName, GROUP_STRUCT* &groups, LIST_STRUCT* lists, i
          groupNames[subwstr]=tmpGroupNum;
          tmpGroupNum ++;
          if (tmpGroupNum >= maxGroupNum){
-           printf("Warning: too many groups; maxGroupNum = %d\n. Will try to double the maximum number of groups..", maxGroupNum);
+           Rprintf("Warning: too many groups; maxGroupNum = %d\n. Will try to double the maximum number of groups..", maxGroupNum);
            GROUP_STRUCT* gp2=new GROUP_STRUCT[maxGroupNum*2];
 	   memcpy(gp2,groups,maxGroupNum*sizeof(GROUP_STRUCT));
 	   delete []groups;
@@ -108,7 +110,7 @@ int getGroupListNum(char* fileName, GROUP_STRUCT* &groups, LIST_STRUCT* lists, i
       listNames[thisliststr]=tmpListNum;
       tmpListNum ++;
       if (tmpListNum >= maxListNum){
-        printf("Error: too many lists. maxListNum = %d\n", maxListNum);
+        Rprintf("Error: too many lists. maxListNum = %d\n", maxListNum);
         return -1;
       }
     }
@@ -162,14 +164,14 @@ int ReadFile(char *fileName, GROUP_STRUCT* &groups, int maxGroupNum, int *groupN
   }
   // construct the structure
 	for (i=0;i<tmpGroupNum;i++){
-    //printf("Group %d items:%d\n",i,groups[i].itemNum);
+    //Rprintf("Group %d items:%d\n",i,groups[i].itemNum);
 		groups[i].items = new ITEM_STRUCT[groups[i].itemNum];
 		groups[i].maxItemNum = groups[i].itemNum;
 		groups[i].itemNum = 0;
 	}
 	
 	for (i=0;i<tmpListNum;i++){
-    //printf("List %d items:%d\n",i,lists[i].itemNum);
+    //Rprintf("List %d items:%d\n",i,lists[i].itemNum);
 		lists[i].values = new double[lists[i].itemNum]; 
 		lists[i].maxItemNum = lists[i].itemNum;
 		lists[i].itemNum = 0;
@@ -178,9 +180,10 @@ int ReadFile(char *fileName, GROUP_STRUCT* &groups, int maxGroupNum, int *groupN
   // actually loading the file
   fh.open(fileName);
   if(!fh.is_open()){
-    cerr<<"Error opening "<<fileName<<endl;
+    Rcpp::Rcerr<<"Error opening "<<fileName<<endl;
+    return -1;
   }
-	
+
 	//Read the header row to get the sample number
   getline(fh,oneline);
 	//fgets(tmpS, MAX_WORD_NUM*(MAX_NAME_LEN+1)*sizeof(char), fh);
@@ -252,13 +255,13 @@ int ReadFile(char *fileName, GROUP_STRUCT* &groups, int maxGroupNum, int *groupN
 		//wordNum = StringToWords(words, tmpS, MAX_NAME_LEN+1, MAX_WORD_NUM, " \t\r\n\v\f");
     getline(fh,oneline);
     wordNum=stringSplit(oneline," \t\r\f\v",vwords);
-   	//printf("wordnum:%d,read one line length:%d\n",wordNum,strlen(tmpS));
+   	//Rprintf("wordnum:%d,read one line length:%d\n",wordNum,strlen(tmpS));
 	}//end loop for fh reading
 	
 	fh.close();
 	//fclose(fh);
 	
-	printf("Summary: %d sgRNAs, %d genes, %d lists; skipped sgRNAs:%d\n", totalItemNum, tmpGroupNum, tmpListNum,skippedsgrna);
+	Rprintf("Summary: %d sgRNAs, %d genes, %d lists; skipped sgRNAs:%d\n", totalItemNum, tmpGroupNum, tmpListNum,skippedsgrna);
 	
 	*groupNum = tmpGroupNum;
 	*listNum = tmpListNum;
@@ -281,7 +284,7 @@ int SaveGroupInfo(char *fileName, GROUP_STRUCT *groups, int groupNum)
   fh = (FILE *)fopen(fileName, "w");
   
   if (!fh){
-    printf("Cannot open %s.\n", fileName);
+    Rprintf("Cannot open %s.\n", fileName);
     return -1;
   }
   
@@ -289,7 +292,7 @@ int SaveGroupInfo(char *fileName, GROUP_STRUCT *groups, int groupNum)
   
   for (i=0;i<groupNum;i++){
     if(groups[i].controlsgs>=groups[i].itemNum){ //skip those that consists of only control sgrnas
-      printf("Suppressing the output of gene %s since it is negative ontrol genes.\n",groups[i].name);
+      Rprintf("Suppressing the output of gene %s since it consists only of negative control sgRNAs.\n",groups[i].name);
       continue;
     }
     if(groups[i].isbad==0){
