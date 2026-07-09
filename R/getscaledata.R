@@ -17,7 +17,8 @@ getscaledata <- function(targetobj,  slot = c("data", "scale.data", "counts")) {
     #        scalef = GetAssayData(object = targetobj, slot = "counts")
     #    }
     #}
-    scalef = GetAssayData(object = targetobj, slot = slot)
+    # 'layer' replaces the 'slot' argument, which is defunct in SeuratObject >= 5
+    scalef = GetAssayData(object = targetobj, layer = slot)
     return(scalef)
 }
 TRUE
