@@ -38,10 +38,11 @@ int getGroupListNum(char* fileName, GROUP_STRUCT* &groups, LIST_STRUCT* lists, i
   fh.open(fileName);
   if(!fh.is_open()){
     Rcpp::Rcerr<<"Error opening "<<fileName<<endl;
+    return -1;
   }
   string oneline;
   getline(fh,oneline);
-  
+
   vector<string> vwords;
   vector<string> vsubwords;
   wordNum=stringSplit(oneline," \t\r\n\v",vwords);
@@ -180,8 +181,9 @@ int ReadFile(char *fileName, GROUP_STRUCT* &groups, int maxGroupNum, int *groupN
   fh.open(fileName);
   if(!fh.is_open()){
     Rcpp::Rcerr<<"Error opening "<<fileName<<endl;
+    return -1;
   }
-	
+
 	//Read the header row to get the sample number
   getline(fh,oneline);
 	//fgets(tmpS, MAX_WORD_NUM*(MAX_NAME_LEN+1)*sizeof(char), fh);
@@ -290,7 +292,7 @@ int SaveGroupInfo(char *fileName, GROUP_STRUCT *groups, int groupNum)
   
   for (i=0;i<groupNum;i++){
     if(groups[i].controlsgs>=groups[i].itemNum){ //skip those that consists of only control sgrnas
-      Rprintf("Suppressing the output of gene %s since it is negative ontrol genes.\n",groups[i].name);
+      Rprintf("Suppressing the output of gene %s since it consists only of negative control sgRNAs.\n",groups[i].name);
       continue;
     }
     if(groups[i].isbad==0){

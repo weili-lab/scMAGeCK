@@ -102,15 +102,18 @@ int loadControlSeq(const char* fname){
   fh.open(fname);
   if(!fh.is_open()){
     Rcpp::Rcerr<<"Error opening "<<fname<<endl;
+    return -1;
   }
   string oneline;
   int ncount=0;
   ControlSeqMap.clear();
   while(!fh.eof()){
     getline(fh,oneline);
-    char nc =oneline[oneline.size() - 1];
-    if (!oneline.empty() && (nc== '\r' || nc =='\n')){
-      oneline.erase(oneline.size() - 1);
+    if (!oneline.empty()){
+      char nc =oneline[oneline.size() - 1];
+      if (nc== '\r' || nc =='\n'){
+        oneline.erase(oneline.size() - 1);
+      }
     }
     //oneline.erase( remove(oneline.begin(), oneline.end(), '\r'), oneline.end() );
     //oneline.erase( remove(oneline.begin(), oneline.end(), '\n'), oneline.end() );
@@ -299,7 +302,7 @@ int RRA_main (vector<string> & argv) {
 void PrintCommandUsage(const char *command)
 {
 	//print the options of the command
-	Rprintf("%s - Robust Rank Aggreation v %s.\n", command, RRA_VERSION);
+	Rprintf("%s - Robust Rank Aggregation v %s.\n", command, RRA_VERSION);
 	Rprintf("usage:\n");
 	Rprintf("-i <input data file>. Format: <item id> <group id> <list id> <value> [<probability>] [<chosen>]\n");
 	Rprintf("-o <output file>. Format: <group id> <number of items in the group> <lo-value> <false discovery rate>\n");
