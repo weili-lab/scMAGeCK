@@ -2,7 +2,7 @@
 guidematrix_to_triplet<- function(count_mat, RDS) {
 
 
-  dgc_mat=as(count_mat,'dgTMatrix')
+  dgc_mat=methods::as(count_mat,'dgTMatrix')
   cell_names=colnames(dgc_mat)
   guide_names=rownames(dgc_mat)
 

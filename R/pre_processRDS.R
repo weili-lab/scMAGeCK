@@ -86,7 +86,7 @@ pre_processRDS <- function(BARCODE, RDS, normalize = TRUE, scale = TRUE) {
   #    }
   #  }
   #}
-  ag_frame=aggregate(umi_count~cell + gene,data=bc_dox,sum)
+  ag_frame=stats::aggregate(umi_count~cell + gene,data=bc_dox,sum)
   ag_frame=ag_frame[ag_frame$cell%in%celllist & ag_frame$gene %in%genelist,]
   bmatrix[cbind(ag_frame$cell,ag_frame$gene)]=ag_frame$umi_count
 
@@ -109,7 +109,7 @@ pre_processRDS <- function(BARCODE, RDS, normalize = TRUE, scale = TRUE) {
   celllist <- rownames(sgmatrix)
   barcodelist <- unique(bc_dox$barcode)
 
-  ag_frame=aggregate(umi_count~cell + barcode,data=bc_dox,sum)
+  ag_frame=stats::aggregate(umi_count~cell + barcode,data=bc_dox,sum)
   ag_frame=ag_frame[ag_frame$cell %in% celllist & ag_frame$barcode %in% barcodelist,]
   sgmatrix[cbind(ag_frame$cell,ag_frame$barcode)]=ag_frame$umi_count
 

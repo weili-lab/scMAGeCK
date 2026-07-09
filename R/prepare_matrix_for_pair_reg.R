@@ -23,7 +23,6 @@ prepare_matrix_for_pair_reg <- function(targetobj, bc_dox, Xmat, Ymat, Amat, cel
     }
     message(paste("finish compiling", length(cell_list), "cells"))
     # browser() filter pairs
-    library(utils)
     pair_genes = list()
     
     for (si in 1:length(cell_list)) {

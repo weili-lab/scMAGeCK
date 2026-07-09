@@ -29,8 +29,8 @@ plot_single_genes <- function(targetob, gene1, targetgene, haslog = TRUE, plotfi
     ds = data.frame(Expression = t_exp, Type = t_type, Cells = c(cell_ctrl, cell_gene1))
     
     if (plotfigure) {
-        p <- ggplot(ds, aes(x = Type, y = Expression)) + geom_violin() + geom_point(position = position_jitter(w = 0.1, 
-            h = 0)) + ggtitle(paste(targetgene, "expression"))
+        p <- ggplot(ds, aes(x = Type, y = Expression)) + geom_violin() + geom_point(position = position_jitter(width = 0.1, 
+            height = 0)) + ggtitle(paste(targetgene, "expression"))
         if (haslog) {
             p = p + scale_y_log10()
         }

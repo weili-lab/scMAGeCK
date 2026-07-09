@@ -68,26 +68,26 @@ Fill colour.
 }
 }
 \examples{
-    
-    ### Loading required package
-    require(Seurat)
-    
     ### BARCODE file contains cell identity information, generated from the cell identity collection step
     BARCODE <- system.file("extdata","barcode_rec.txt",package = "scMAGeCK")
-    
+
     ### RDS can be a Seurat object or local RDS file path that contains the scRNA-seq dataset
     RDS <- system.file("extdata","singles_dox_mki67_v3.RDS",package = "scMAGeCK")
-    
-    ### For using the featurePlot function, it needs to do the preprocessRDS first
-    Demo <- pre_processRDS(BARCODE = BARCODE, RDS = RDS)
-    
-    ### For the sgRNA distribution
-    featurePlot(BARCODE = BARCODE, RDS = Demo, TYPE = "Dis")
-    
-    ### For the density of sgRNA, clustering needed to be done first.
-    Demo <- RunUMAP(Demo, dims = 1:10)
-    featurePlot(RDS = Demo, sgRNA = NULL, TYPE = "Den")
-    
-    ###For the Vlnplot to display the gene regulation, take MKI67 for examples
-    featurePlot(RDS = Demo, GENE = "MKI67", sgRNA = "TP53", TYPE = "Vln")
+
+    \donttest{
+      library(Seurat)
+
+      ### For using the featurePlot function, it needs to do the preprocessRDS first
+      Demo <- pre_processRDS(BARCODE = BARCODE, RDS = RDS)
+
+      ### For the sgRNA distribution
+      featurePlot(BARCODE = BARCODE, RDS = Demo, TYPE = "Dis")
+
+      ### For the density of sgRNA, clustering needed to be done first.
+      Demo <- RunUMAP(Demo, dims = 1:10)
+      featurePlot(RDS = Demo, sgRNA = NULL, TYPE = "Den")
+
+      ### For the Vlnplot to display the gene regulation, take MKI67 for examples
+      featurePlot(RDS = Demo, GENE = "MKI67", sgRNA = "TP53", TYPE = "Vln")
+    }
 }

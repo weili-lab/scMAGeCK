@@ -10,7 +10,7 @@ scmageck_correct_bg_exp<-function(rds,tr_x,tr_y,
   tr_y_dup=tr_y
   # clustering information
   if(is.null(Idents(rds))){
-    error('Background exp correction but cannot find clustering assignments from meta data. Either do the clustering first or set up Idents of your cells with clustering results')
+    stop('Background exp correction but cannot find clustering assignments from meta data. Either do the clustering first or set up Idents of your cells with clustering results')
   }
   cell_name_clusters=as.character(Idents(rds))
   cell_name=Cells(rds)
@@ -28,7 +28,7 @@ scmageck_correct_bg_exp<-function(rds,tr_x,tr_y,
   # calculate cluster distances
   rds_red=Reductions(rds,slot= reductions_used)
   if(is.null(rds_red)){
-    error(paste('Cannot find reduction',rds_red,'from Seurat object, which will be needed for gene expression correction.'))
+    stop(paste('Cannot find reduction',rds_red,'from Seurat object, which will be needed for gene expression correction.'))
   }
   embedding_data=rds_red@cell.embeddings
   
@@ -49,7 +49,7 @@ scmageck_correct_bg_exp<-function(rds,tr_x,tr_y,
   }
   rownames(avg_dist_mat)=avg_dist_mat_rc
 
-  dist_cluster=as.matrix(dist(avg_dist_mat))
+  dist_cluster=as.matrix(stats::dist(avg_dist_mat))
 
   for(this_cluster in unique(all_clusters)){
     message(paste('correcting cluster',this_cluster,'...'))

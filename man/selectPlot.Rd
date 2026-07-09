@@ -59,8 +59,10 @@ Lower quality could improve the sensitivity but reduce accuracy.
     
     ### RDS can be a Seurat object or local RDS file path that contains the scRNA-seq dataset
     RDS <- system.file("extdata","singles_dox_mki67_v3.RDS",package = "scMAGeCK")
-    
+
+    \donttest{
     lr_result <- scmageck_lr(BARCODE=BARCODE, RDS=RDS, LABEL='dox_scmageck_lr', SIGNATURE = NULL,
             NEGCTRL = 'NonTargetingControlGuideForHuman', PERMUTATION = 1000, SAVEPATH=NULL, LAMBDA=0.01)
     selectPlot(GENE = "MKI67", lr_result = lr_result, CUTOFF = 0.05, ADJ = "fdr", TYPE = "lr")
+    }
 }

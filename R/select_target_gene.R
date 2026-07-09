@@ -72,7 +72,7 @@ select_target_gene<-function(rds_object, bc_frame,perturb_gene, non_target_ctrl,
       corfr<-targetls$cordata
       
       corfr_sel=subset(corfr, abs(cor_target)-abs(cor_ctrl)>min_abs_diff)
-      corfr_sel=corfr_sel[order(abs(corfr_sel$cor_ctrl),decreasing = T),]
+      corfr_sel=corfr_sel[order(abs(corfr_sel$cor_ctrl),decreasing = TRUE),]
       
       remain_gene=min(nrow(corfr_sel),min_gene_num-nrow(deframe))
       message(paste('Remaining',remain_gene,'genes selected..'))

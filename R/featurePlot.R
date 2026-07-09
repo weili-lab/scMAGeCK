@@ -134,7 +134,7 @@ featurePlot <- function(RDS, TYPE = plot.type, BARCODE = NULL, sgRNA = NULL, GEN
       
       
       #wilcoxon test > looking up median difference between two group
-      wil <- wilcox.test(cell_ko$genes, other$genes, mu=0, alternative = "two.sided", paired = FALSE)
+      wil <- stats::wilcox.test(cell_ko$genes, other$genes, mu=0, alternative = "two.sided", paired = FALSE)
       eq <- paste0("p_value = ", signif(wil$p.value, digits = 3))
       #the base of violin plot
       if (TYPE == "Vln"){
@@ -168,7 +168,7 @@ featurePlot <- function(RDS, TYPE = plot.type, BARCODE = NULL, sgRNA = NULL, GEN
   } else {
     if (TYPE == "Den") {
       
-      colfunc<-colorRampPalette(c("skyblue3","aquamarine3","yellow","red"))
+      colfunc<-grDevices::colorRampPalette(c("skyblue3","aquamarine3","yellow","red"))
       
       if (is.null(sgRNA)) {
         grna <- GetAssayData(RDS, assay = "sgRNA")
