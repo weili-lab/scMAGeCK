@@ -35,7 +35,7 @@ get_exp_cor_frame<-function(rds_object,targetgene,ctrlgene,
                       #cor_target_nz=cor_1s_nz,cor_ctrl_nz=cor_ctrl_nz,
                       diff=cor_1s-cor_ctrl)
   
-  corframe=corframe[order(corframe$diff,decreasing = T),]
+  corframe=corframe[order(corframe$diff,decreasing = TRUE),]
   
   corframe_nona=corframe[!is.na(corframe$diff),]
   corframe_nona=corframe_nona[corframe_nona$gene!=targetgene,]

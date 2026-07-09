@@ -58,7 +58,7 @@ scmageck_rra <- function(BARCODE, RDS, GENE, RRAPATH = NULL, LABEL = NULL, NEGCT
     rownames(bc_dox_uq) = bc_dox_uq[, 1]
   }else {
     if (ASSIGNMETHOD == "largest") {
-         bc_dox=bc_dox[order(bc_dox[,'umi_count'],decreasing = T),] 
+         bc_dox=bc_dox[order(bc_dox[,'umi_count'],decreasing = TRUE),] 
          bc_dox_uq=bc_dox[!duplicated(bc_dox$cell),]
          rownames(bc_dox_uq) = bc_dox_uq[, 1]
     }else{

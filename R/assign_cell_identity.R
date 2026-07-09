@@ -47,7 +47,7 @@ assign_cell_identity <- function(BARCODE, RDS, ASSIGNMETHOD='unique') {
     RDS<-AddMetaData(object = RDS,metadata = num_ass,col.name = 'umi_count')
   } else {
     if (ASSIGNMETHOD == "largest") {
-      bc_dox=bc_dox[order(bc_dox[,'umi_count'],decreasing = T),] 
+      bc_dox=bc_dox[order(bc_dox[,'umi_count'],decreasing = TRUE),] 
       
       bc_dox_nondup=bc_dox[!duplicated(bc_dox$cell),]
       
