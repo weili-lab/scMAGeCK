@@ -13,7 +13,9 @@ guidematrix_to_triplet<- function(count_mat, RDS) {
   } else {
     targetobj = RDS
   }
-  
+  # ensure the object is compatible with the installed Seurat version
+  targetobj = UpdateSeuratObject(targetobj)
+
   if (sum(cell_names %in% Cells(RDS))==0) {
     stop("Cell names in guide matrix do not match those in Seurat object. Are columns cell names?")
   }

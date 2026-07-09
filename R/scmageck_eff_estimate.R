@@ -15,7 +15,9 @@ scmageck_eff_estimate<-function(rds_object, bc_frame, perturb_gene, non_target_c
   if (is.character(rds_object)) {
     message(paste("Reading RDS file:", rds_object))
     rds_object = readRDS(rds_object)
-  } 
+  }
+  # ensure the object is compatible with the installed Seurat version
+  rds_object = UpdateSeuratObject(rds_object)
 
   if (is.character(bc_frame)) {
     bc_frame = read.table(bc_frame, header = TRUE, as.is = TRUE)

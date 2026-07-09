@@ -9,8 +9,10 @@ scmageck_best_lambda <- function(
   if (is.character(rds_object)) {
     message(paste("Reading RDS file:", rds_object))
     rds_object = readRDS(rds_object)
-  } 
-  
+  }
+  # ensure the object is compatible with the installed Seurat version
+  rds_object = UpdateSeuratObject(rds_object)
+
   #randomly select 250 cells expressing non-targeting controls and re-labeled them as a pseudogene
   rds_object_meta = rds_object@meta.data
   rand_df = rds_object_meta[sample(nrow(rds_object_meta), size=pseudogene_num), ]

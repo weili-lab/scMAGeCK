@@ -47,6 +47,8 @@ scmageck_lr <- function(BARCODE, RDS, NEGCTRL, SELECT_GENE = NULL, LABEL = NULL,
   } else {
     targetobj = RDS
   }
+  # ensure the object is compatible with the installed Seurat version
+  targetobj = UpdateSeuratObject(targetobj)
   # check if names are consistent 
   nmatch = sum(bc_dox[, 'cell'] %in% colnames(x = targetobj))
   if (nmatch == 0) {

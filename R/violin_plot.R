@@ -1,5 +1,7 @@
 violin_plot <- function(BARCODE, GENE, sgRNA, RDS, CONTROL = NULL) {
   pbmc <- readRDS(RDS)
+  # ensure the object is compatible with the installed Seurat version
+  pbmc <- UpdateSeuratObject(pbmc)
   barcode <- read.delim(BARCODE)
   target_gene_list = strsplit(GENE, ",")[[1]]
   target_gene_list = trimws(target_gene_list)

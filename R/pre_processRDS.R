@@ -22,7 +22,9 @@ pre_processRDS <- function(BARCODE, RDS, normalize = TRUE, scale = TRUE) {
   } else {
     targetobj = RDS
   }
-  
+  # ensure the object is compatible with the installed Seurat version
+  targetobj = UpdateSeuratObject(targetobj)
+
   # check if names are consistent
   nmatch = sum(bc_dox[, 1] %in% colnames(x = targetobj))
   if (nmatch == 0) {
