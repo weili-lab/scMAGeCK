@@ -29,8 +29,8 @@ plot_gi_genes <- function(targetobj, gene1, gene2, targetgene, select_pair_genes
         cell_merged))
     
     if (plotfigure) {
-        p <- ggplot(ds, aes(x = Type, y = Expression)) + geom_violin() + geom_point(position = position_jitter(w = 0.1, 
-            h = 0)) + ggtitle(paste(targetgene, "expression"))
+        p <- ggplot(ds, aes(x = Type, y = Expression)) + geom_violin() + geom_point(position = position_jitter(width = 0.1, 
+            height = 0)) + ggtitle(paste(targetgene, "expression"))
         if (haslog) {
             p = p + scale_y_log10()
         }

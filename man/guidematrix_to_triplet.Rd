@@ -24,5 +24,3 @@ Note that the dataset has to be normalized and scaled.
 \value{
   A data frame that contains cell names, guide names, read count and UMI count as column.
 }
-\examples{
-}

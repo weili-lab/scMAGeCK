@@ -19,7 +19,7 @@ identity collection step; or a corresponding data.frame.
   \item{RDS}{
 RDS object from the pre-processRDS step; or a path to RDS file.
 }
-  \item{ASSIGNMENTMETHOD}{
+  \item{ASSIGNMETHOD}{
 Determine the way to assign cell identity. "unique" only assigns single cells that only have 1 guide 
 detected (others are labeled as NA or doublet).  
 "largest" will assign single cells with the largest umi count.

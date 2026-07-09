@@ -68,7 +68,7 @@ scmageck_best_lambda <- function(
 
   plot(fp_combine_df$`log10(lambda)`, fp_combine_df$fp,
        ylab = "False Positive Rate", xlab = "Log(lambda)")
-  abline(h = 0.10, lty=3, col="blue")
+  graphics::abline(h = 0.10, lty=3, col="blue")
   
   return(fp_combine_df)
 }

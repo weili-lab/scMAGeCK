@@ -12,9 +12,9 @@ sel_lr <- function(GENE, lr_result, CUTOFF = 0.05, ADJ = "fdr"){
   }
   if (length(tem_genelist >= 1)) {
     sel_sc <- lr_sc[tem_genelist]
-    sel_sc <- setNames(sel_sc, paste0(colnames(sel_sc), "_sc"))
+    sel_sc <- stats::setNames(sel_sc, paste0(colnames(sel_sc), "_sc"))
     sel_p <- lr_p[tem_genelist]
-    sel_p <- setNames(sel_p, paste0(colnames(sel_p), "_p"))
+    sel_p <- stats::setNames(sel_p, paste0(colnames(sel_p), "_p"))
     for (i in colnames(sel_p)) {
       sel_p[, paste0(i,"adj")] <- p.adjust(sel_p[[i]], method = ADJ)
     }

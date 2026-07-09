@@ -8,12 +8,12 @@ Authors@R: c(
     person("Xiaolong", "Cheng", email = "xiaolongcheng1120@gmail.com", role = c("aut", "cre")),
     person("Lin", "Yang", role = "aut"))
 Description: scMAGeCK is a computational model to identify genes associated with multiple expression phenotypes from CRISPR screening coupled with single-cell RNA sequencing data (CROP-seq).
-License: BSD_2_clause
+License: BSD_2_clause + file LICENSE
 URL: https://github.com/weili-lab/scMAGeCK
 BugReports: https://github.com/weili-lab/scMAGeCK/issues
 biocViews: CRISPR, SingleCell, RNASeq, PooledScreens, Transcriptomics, GeneExpression, Regression
 NeedsCompilation: yes
-Imports: Seurat (>= 5.0.0), ggplot2, stats, utils, Rcpp
+Imports: Seurat (>= 5.0.0), ggplot2, stats, utils, methods, graphics, grDevices, Rcpp
 LinkingTo: Rcpp
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr

@@ -68,7 +68,7 @@ violin_plot <- function(BARCODE, GENE, sgRNA, RDS, CONTROL = NULL) {
     
   
   #wilcoxon test > looking up median difference between two group
-  wil <- wilcox.test(cell_ko$genes, other$genes, mu=0, alternative = "two.sided", paired = FALSE)
+  wil <- stats::wilcox.test(cell_ko$genes, other$genes, mu=0, alternative = "two.sided", paired = FALSE)
   eq <- paste0("p_value = ", signif(wil$p.value, digits = 3))
   
   #the base of violin plot

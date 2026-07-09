@@ -7,7 +7,9 @@
 #include <stdlib.h>
 #include <memory.h>
 
+#ifndef NDEBUG
 #define NDEBUG
+#endif
 #include <assert.h>
 
 #define MAX_NAME_LEN 10000           //maximum length of item name, group name or list name

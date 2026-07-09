@@ -15,7 +15,7 @@ scmageck_best_lambda(
   bc_frame,
   non_target_ctrl = "NT",
   lambda_seq = 10^seq(-3, 3, length = 10),
-  pseudogene_label = "PSEUDO_GENE"
+  pseudogene_label = "PSEUDO_GENE",
   pseudogene_num = 250
 )
 }
@@ -44,5 +44,5 @@ scmageck_best_lambda(
 The output of the function is a data frame containing the lambda value and the corresponding false positive rate on the negative control samples. Additionally, the function generates a plot showing the relationship between lambda and the false positive rate.
 }
 \seealso{
-\code{\link{scmageck_eff_estimate}} \code{\href{https://bitbucket.org/weililab/scmageck/src/master/}{scMAGeCK BitBucket}}
+\code{\link{scmageck_eff_estimate}} \href{https://bitbucket.org/weililab/scmageck/src/master/}{scMAGeCK BitBucket}
 }
