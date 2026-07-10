@@ -68,6 +68,7 @@ Fill colour.
 \value{
   A \code{ggplot} object with the requested plot (sgRNA distribution,
   violin/ECDF of gene expression by perturbation, or a density plot).
+  Returns \code{NULL} (with a message) if \code{TYPE} is not recognized.
 }
 \examples{
     ### BARCODE file contains cell identity information, generated from the cell identity collection step
