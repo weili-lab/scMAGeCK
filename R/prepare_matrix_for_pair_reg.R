@@ -12,7 +12,7 @@ prepare_matrix_for_pair_reg <- function(targetobj, bc_dox, Xmat, Ymat, Amat, cel
     
     # get the targeting genes per cell
     cell_list = list()
-    for (i in 1:nrow(bc_dox_nonuq)) {
+    for (i in seq_len(nrow(bc_dox_nonuq))) {
         cellname = bc_dox_nonuq[i, 1]
         targetgene = bc_dox_nonuq[i, "gene"]
         if (cellname %in% names(cell_list)) {
@@ -25,7 +25,7 @@ prepare_matrix_for_pair_reg <- function(targetobj, bc_dox, Xmat, Ymat, Amat, cel
     # browser() filter pairs
     pair_genes = list()
     
-    for (si in 1:length(cell_list)) {
+    for (si in seq_along(cell_list)) {
         gls = unique(cell_list[[si]])
         gls_cell_name = names(cell_list)[si]
         if (length(gls) < 2) {
@@ -79,8 +79,8 @@ prepare_matrix_for_pair_reg <- function(targetobj, bc_dox, Xmat, Ymat, Amat, cel
     
     rownames(Xmat_db_res) = cells_combine
     colnames(Xmat_db_res) = levels(tgphenotype)
-    # cells_combine[as.matrix(cbind(1:nrow(cells_combine),as.numeric(tgphenotype)))]=1 browser()
-    for (i in 1:nrow(bc_dox_nonuq)) {
+    # cells_combine[as.matrix(cbind(seq_len(nrow(cells_combine)),as.numeric(tgphenotype)))]=1 browser()
+    for (i in seq_len(nrow(bc_dox_nonuq))) {
         t_cellname = bc_dox_nonuq[i, 1]
         t_gene_target = bc_dox_nonuq[i, "gene"]
         if (t_cellname %in% cells_combine & t_gene_target %in% colnames(Xmat_db_res)) {
@@ -97,7 +97,7 @@ prepare_matrix_for_pair_reg <- function(targetobj, bc_dox, Xmat, Ymat, Amat, cel
     rownames(Xmat_db) = cells_combine
     colnames(Xmat_db) = names(select_pair_genes)
     
-    for (i in 1:length(select_pair_genes)) {
+    for (i in seq_along(select_pair_genes)) {
         t_pair_name = names(select_pair_genes)[i]
         for (cn in select_pair_genes[[i]]) {
             if (cn %in% cells_combine) {

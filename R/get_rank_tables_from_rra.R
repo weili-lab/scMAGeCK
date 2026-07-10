@@ -12,7 +12,7 @@ get_rank_tables_from_rra <- function(rankexp, bc_dox_u, rrapath = NULL, pcutoff 
     
     texp_guide_ass = bc_dox_u[names(rankexp), "barcode"]
     texp_gene_ass = bc_dox_u[names(rankexp), "gene"]
-    texp_guide_ass1 = paste(texp_guide_ass, 1:length(texp_guide_ass), sep = "_r")
+    texp_guide_ass1 = paste(texp_guide_ass, seq_along(texp_guide_ass), sep = "_r")
     
     rra_oframe = data.frame(guide = texp_guide_ass1, gene = texp_gene_ass, list = rep("list", length(texp_guide_ass)), 
         value = rankexp, prob = rep(1, length(texp_guide_ass)), chosen = rep(1, length(texp_guide_ass)))

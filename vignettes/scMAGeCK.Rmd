@@ -23,7 +23,7 @@ scMAGeCK is based on our previous [MAGeCK](http://mageck.sourceforge.net) and MA
 
 ### scmageck_rra
 
-```{r}
+```{r rra-example}
     library(scMAGeCK)
     ### BARCODE file contains cell identity information, generated from the cell identity collection step
     BARCODE <- system.file("extdata","barcode_rec.txt",package = "scMAGeCK")
@@ -48,7 +48,7 @@ scMAGeCK is based on our previous [MAGeCK](http://mageck.sourceforge.net) and MA
 
 ### scmageck_lr
 
-```{r}
+```{r lr-example}
     library(scMAGeCK)
     ### BARCODE file contains cell identity information, generated from the cell identity collection step
     BARCODE <- system.file("extdata","barcode_rec.txt",package = "scMAGeCK")
@@ -112,3 +112,9 @@ This row records the effects of perturbing APC gene on the expressions of APC, A
 Questions? Comments? Join the [MAGeCK Google group](https://groups.google.com/forum/?hl=en#!forum/mageck) or email us (<wli2@childrensnational.org>) directly.
 
 Any advice and suggestions will be greatly appreciated.
+
+## Session info
+
+```{r session-info}
+sessionInfo()
+```

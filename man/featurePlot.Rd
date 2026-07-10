@@ -1,6 +1,5 @@
 \name{featurePlot}
 \alias{featurePlot}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Detect the sgRNA distribution and generate Vlnplot to identity gene regulation between
 different cells.
@@ -15,7 +14,6 @@ featurePlot(RDS, TYPE = plot.type, BARCODE = NULL, sgRNA = NULL, GENE = NULL, CO
 plot.type
 # c("Dis", "Vln", "Den")
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{RDS}{
 RDS object from the pre-processRDS step
@@ -66,6 +64,11 @@ Text size of figure legend.
   \item{fill}{
 Fill colour.
 }
+}
+\value{
+  A \code{ggplot} object with the requested plot (sgRNA distribution,
+  violin/ECDF of gene expression by perturbation, or a density plot).
+  Returns \code{NULL} (with a message) if \code{TYPE} is not recognized.
 }
 \examples{
     ### BARCODE file contains cell identity information, generated from the cell identity collection step

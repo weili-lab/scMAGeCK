@@ -58,7 +58,7 @@ single_gene_matrix_regression <- function(targetobj, ngctrlgene = c("NonTargetin
         Xmat = matrix(rep(0, length(select_cells) * length(unique(tgphenotype))), nrow = length(select_cells))
         rownames(Xmat) = select_cells
         colnames(Xmat) = levels(tgphenotype)
-        Xmat[as.matrix(cbind(1:nrow(Xmat), as.numeric(tgphenotype)))] = 1
+        Xmat[as.matrix(cbind(seq_len(nrow(Xmat)), as.numeric(tgphenotype)))] = 1
         Xmat[, "NegCtrl"] = 1  # set up base line
     } else {
         tgf = colnames(indmatrix)

@@ -33,7 +33,7 @@ scmageck_best_lambda <- function(
   } 
   
   bc_frame2 <- bc_frame
-  for (x in 1:length(bc_frame$cell)) {
+  for (x in seq_along(bc_frame$cell)) {
     bc_frame2$gene[x] = ifelse(bc_frame2$cell[x] %in% rownames(rand_df), pseudogene_label, bc_frame2$gene[x])
   } 
   

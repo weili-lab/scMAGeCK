@@ -46,7 +46,7 @@ scmageck_eff_estimate<-function(rds_object, bc_frame, perturb_gene, non_target_c
 	  stop(paste('perturb_gene_exp_id_list parameter should have the same length as perturb_gene.'))
       }
     }
-    for(gl_pt_i in 1:length(perturb_gene)){
+    for(gl_pt_i in seq_along(perturb_gene)){
       gl_pt=perturb_gene[gl_pt_i]
       message(paste('Search for', gl_pt, 'target genes..'))
       if(sum(names(rds_used)==assay_for_cor)==0){ # Assays(rds_used) doesn't work

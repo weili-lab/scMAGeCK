@@ -1,3 +1,11 @@
+# scMAGeCK 0.99.1
+
+* BiocCheck cleanup for Bioconductor review: runnable examples added to
+  `guidematrix_to_triplet`, `scmageck_best_lambda` and `scmageck_eff_estimate`;
+  `\value` sections added to `assign_cell_identity`, `featurePlot`, `selectPlot`;
+  `1:n` replaced with `seq_len()`/`seq_along()`; `biocViews: Sequencing` added;
+  expanded package Description; vignette chunk labels + `sessionInfo()`.
+
 # scMAGeCK 0.99.0
 
 * Full compatibility with Seurat v5 / SeuratObject >= 5.
