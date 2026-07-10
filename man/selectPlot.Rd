@@ -47,7 +47,8 @@ Lower quality could improve the sensitivity but reduce accuracy.
 }
 \value{
   A \code{ggplot} object showing the selected genes from the scMAGeCK-RRA
-  or scMAGeCK-LR results.
+  or scMAGeCK-LR results. Returns \code{NULL} (with a message) if no plot
+  can be generated for the requested inputs.
 }
 \examples{
     ### by using RRA test, take MKI67 for example
