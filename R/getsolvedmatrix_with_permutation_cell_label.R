@@ -8,7 +8,7 @@ getsolvedmatrix_with_permutation_cell_label <- function(Xm, Ym, lambda = 0.01, n
     rownames(Amat_ret_higher) = rownames(Amat_ret)
     colnames(Amat_ret_higher) = colnames(Amat_ret)
     # permute N times randomly shuffle cell labels
-    for (npm in 1:npermutation) {
+    for (npm in seq_len(npermutation)) {
         if (npm%%100 == 0) {
             message(paste("Permutation:", npm, "/", npermutation, "..."))
         }

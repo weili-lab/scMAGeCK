@@ -1,6 +1,5 @@
 \name{pre_processRDS}
 \alias{pre_processRDS}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Integrate the imformation of sgRNA into RDS file for the further analysis.
 }
@@ -10,7 +9,6 @@ Pre-process the sgRNA count from previous step, and generate the sgRNA expressio
 \usage{
 pre_processRDS(BARCODE, RDS, normalize = TRUE, scale = TRUE) 
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{BARCODE}{
 A txt file to include cell identity information, generated from the cell 

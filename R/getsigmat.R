@@ -2,7 +2,7 @@
 getsigmat <- function(Ymat, gmt_file) {
   colgmt <- colnames(gmt_file)
   sig_mat <- data.frame(row.names = rownames(Ymat))
-  for (num in (1:ncol(gmt_file))) {
+  for (num in (seq_len(ncol(gmt_file)))) {
     genes <- as.character(gmt_file[, num])
     if (any(genes %in% colnames(Ymat))) {
       genes <- genes[nchar(genes)>0] 

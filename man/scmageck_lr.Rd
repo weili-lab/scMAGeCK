@@ -1,6 +1,5 @@
 \name{scmageck_lr}
 \alias{scmageck_lr}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Use linear regression to test the association of gene knockout with all possible genes
 }
@@ -11,7 +10,6 @@ echo "Use linear regression to test the association of gene knockout with all po
 scmageck_lr(BARCODE, RDS, NEGCTRL, SELECT_GENE=NULL, LABEL = NULL,  
 PERMUTATION = NULL, SIGNATURE = NULL, SAVEPATH = "./",LAMBDA=0.01,GENE_FRAC=0.01,SLOT='scale.data')
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{BARCODE}{
 A txt file to include cell identity information, generated from the cell 

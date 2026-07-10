@@ -46,7 +46,7 @@ prepare_matrix_for_pair_reg_indmat <- function(targetobj, ind_matrix, Xmat, Ymat
     # rownames(Xmat_db_res)=cells_combine colnames(Xmat_db_res)=levels(tgphenotype)
     Xmat_db_res = Xmat[cells_combine, ]
     
-    # cells_combine[as.matrix(cbind(1:nrow(cells_combine),as.numeric(tgphenotype)))]=1 browser()
+    # cells_combine[as.matrix(cbind(seq_len(nrow(cells_combine)),as.numeric(tgphenotype)))]=1 browser()
     
     # residule of Xmat * A =Ymat
     Ymat_db_residule = Ymat_db - Xmat_db_res %*% Amat
@@ -60,7 +60,7 @@ prepare_matrix_for_pair_reg_indmat <- function(targetobj, ind_matrix, Xmat, Ymat
     
     message(paste("selected gene pairs:", length(s_pair_x)))
     select_pair_genes = list()
-    for (i in 1:length(s_pair_x)) {
+    for (i in seq_along(s_pair_x)) {
         nct = rownames(ind_matrix)[which(ind_matrix[, s_pair_x[i]] & ind_matrix[, s_pair_y[i]])]
         cn = nct[nct %in% cells_combine]
         Xmat_db[cn, i] = 1

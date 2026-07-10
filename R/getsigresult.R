@@ -7,18 +7,18 @@ getsigresult <- function(signature_score, signature_pval) {
     sig_name <- rbind(sig_name, data.frame(rep(i, nrow(signature_score))))
   }
   sig_sc <- NULL
-  for (n in 1:ncol(signature_score)) {
+  for (n in seq_len(ncol(signature_score))) {
     sig_sc <- rbind(sig_sc, data.frame(signature_score[, n]))
   }
   sig_p <- NULL
-  for (n in 1:ncol(signature_pval)) {
+  for (n in seq_len(ncol(signature_pval))) {
     sig_p <- rbind(sig_p, data.frame(signature_pval[, n]))
   }
   output <- cbind(output, sig_name)
   output <- cbind(output, sig_sc)
   output <- cbind(output, sig_p)
   colnames(output) <- paste(c("sgrna", "gene_signature", "LR_score", "p_value"))
-  rownames(output) <- (1:nrow(output))
+  rownames(output) <- (seq_len(nrow(output)))
   return(output)
 }
 TRUE

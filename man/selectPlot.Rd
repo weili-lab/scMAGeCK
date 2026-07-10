@@ -1,6 +1,5 @@
 \name{selectPlot}
 \alias{selectPlot}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 generate the selection plot
 }
@@ -16,7 +15,6 @@ select.type
 #c("lr", "rra")
 
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{GENE}{
 Genes whose expressions are to be tested under the LR test. Multiple genes can be provided, 
@@ -46,6 +44,10 @@ gene selection under two different cell condition.
 The number of single-cells that passes the threshold when use the RRA test, default is 10.
 Lower quality could improve the sensitivity but reduce accuracy.
 }
+}
+\value{
+  A \code{ggplot} object showing the selected genes from the scMAGeCK-RRA
+  or scMAGeCK-LR results.
 }
 \examples{
     ### by using RRA test, take MKI67 for example

@@ -1,6 +1,5 @@
 \name{scmageck_eff_estimate}
 \alias{scmageck_eff_estimate}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 	Detect heterogenous perturbation responses from Perturb-seq using perturbation-response score (PS) 
 }
@@ -28,7 +27,6 @@ scmageck_eff_estimate(
 )
  
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{rds_object}{
   A Seurat object or local RDS file path that contains the scRNA-seq dataset; 
@@ -110,35 +108,21 @@ Returns a list of several items:
   target_gene_search_result: the results of target gene search for each perturbed gene
 }
 \examples{
-\donttest{
-    library(Seurat)
     # set the BARCODE and RDS file path
-    # if you have a guide matrix, use guidematrix_to_triplet() function in scMAGeCK to convert guide matrix to BARCODE file
+    # if you have a guide matrix, use guidematrix_to_triplet() to convert it to a BARCODE file
     BARCODE = system.file("extdata","barcode_rec.txt",package = "scMAGeCK")
-    bc_frame=read.table(BARCODE,header = TRUE,as.is = TRUE)
-    
-    # needs clean later, but cell identity will need to be fixed
-    bc_frame$cell=sub('-1','',bc_frame$cell)
-    
-    
-    ## RDS can be a Seurat object or local RDS file path that contains the scRNA-seq dataset
+    bc_frame = read.table(BARCODE, header = TRUE, as.is = TRUE)
+    # cell identity may need to be fixed to match the expression matrix
+    bc_frame$cell = sub('-1','',bc_frame$cell)
     RDS = system.file("extdata","singles_dox_mki67_v3.RDS",package = "scMAGeCK")
-    rds_object=readRDS(RDS)
-    
-    # Run scmageck_eff_estimate function
-    # By default, the result will be saved to the current working directory. 
-    ## rds_object<-assign_cell_identity(bc_frame,rds_object)
-    
-    eff_object <- scmageck_eff_estimate(rds_object, bc_frame, perturb_gene='TP53', 
-                                        non_target_ctrl = 'NonTargetingControlGuideForHuman',assay_for_cor='RNA')
-    
-    eff_estimat=eff_object$eff_matrix
-    rds_subset=eff_object$rds
-    
-    # TP53 scores clearly show the pattern of clustering
-    FeaturePlot(rds_subset,features='TP53_eff',reduction = 'tsne')
-    
-    # whereas TP53 gene expression did not have this pattern
-    FeaturePlot(rds_subset,features='TP53',reduction = 'tsne')
-}
+
+    # the full estimation (DE search + quadratic optimization) is time consuming
+    \donttest{
+      rds_object = readRDS(RDS)
+      eff_object <- scmageck_eff_estimate(rds_object, bc_frame, perturb_gene = 'TP53',
+                          non_target_ctrl = 'NonTargetingControlGuideForHuman',
+                          assay_for_cor = 'RNA')
+      eff_estimat = eff_object$eff_matrix
+      rds_subset = eff_object$rds
+    }
 }

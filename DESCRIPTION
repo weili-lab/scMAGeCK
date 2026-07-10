@@ -1,17 +1,25 @@
 Package: scMAGeCK
 Type: Package
 Title: Identify genes associated with multiple expression phenotypes in single-cell CRISPR screening data
-Version: 0.99.0
+Version: 0.99.1
 Date: 2026-07-09
 Authors@R: c(
     person("Wei", "Li", email = "li.david.wei@gmail.com", role = c("aut", "cre")),
     person("Xiaolong", "Cheng", email = "xiaolongcheng1120@gmail.com", role = "aut"),
     person("Lin", "Yang", role = "aut"))
-Description: scMAGeCK is a computational model to identify genes associated with multiple expression phenotypes from CRISPR screening coupled with single-cell RNA sequencing data (CROP-seq).
+Description: scMAGeCK is a computational model to identify genes associated
+    with multiple expression phenotypes from CRISPR screening coupled with
+    single-cell RNA sequencing data (e.g. CROP-seq, Perturb-seq). It provides
+    two complementary modules: a rank-based test (scMAGeCK-RRA) that links a
+    perturbation to a single marker or gene signature, and a linear-regression
+    test (scMAGeCK-LR) that estimates the effect of each perturbation on the
+    expression of all genes. The package also estimates single-cell
+    perturbation-response scores to capture heterogeneous perturbation effects
+    across individual cells.
 License: BSD_2_clause + file LICENSE
 URL: https://github.com/weili-lab/scMAGeCK
 BugReports: https://github.com/weili-lab/scMAGeCK/issues
-biocViews: CRISPR, SingleCell, RNASeq, PooledScreens, Transcriptomics, GeneExpression, Regression
+biocViews: CRISPR, SingleCell, RNASeq, Sequencing, PooledScreens, Transcriptomics, GeneExpression, Regression
 NeedsCompilation: yes
 Imports: Seurat (>= 5.0.0), ggplot2, stats, utils, methods, graphics, grDevices, Rcpp
 LinkingTo: Rcpp

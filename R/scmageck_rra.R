@@ -107,7 +107,7 @@ scmageck_rra <- function(BARCODE, RDS, GENE, RRAPATH = NULL, LABEL = NULL, NEGCT
     colnames(gmt) <- gmt[1, ]
     gmt <- gmt[-1:-2, ]
     message(paste("Total signature records:", ncol(gmt)))
-    for (num in (1:ncol(gmt))) {
+    for (num in (seq_len(ncol(gmt)))) {
         GENE <- gmt[, num]
         GENE <- as.character(subset(GENE, GENE != ""))
         message(paste("Target gene_signature:", colnames(gmt)[num]))

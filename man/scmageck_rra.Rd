@@ -1,6 +1,5 @@
 \name{scmageck_rra}
 \alias{scmageck_rra}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Use RRA to test the association of gene knockout with certain marker expression
 }
@@ -11,7 +10,6 @@ echo "Use RRA to test the association of gene knockout with certain marker expre
 scmageck_rra(BARCODE, RDS, GENE, RRAPATH = NULL, LABEL = NULL, NEGCTRL = NULL, 
 SIGNATURE = NULL, KEEPTMP = FALSE, PATHWAY = FALSE, SAVEPATH = "./",ASSIGNMETHOD = "largest",SLOT='scale.data')
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{BARCODE}{
 A txt file to include cell identity information, generated from the cell 
