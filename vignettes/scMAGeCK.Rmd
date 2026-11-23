@@ -1,12 +1,16 @@
 ---
-title: "scMAGeCK"
+title: "Analysing single-cell CRISPR screens with scMAGeCK"
 author: "Wei Li, Xiaolong Cheng, Lin Yang"
-date: "Jan 6, 2022"
-output: rmarkdown::html_vignette
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+package: scMAGeCK
+output:
+  BiocStyle::html_document:
+    toc: true
+    toc_float: true
 vignette: >
-  %\VignetteIndexEntry{scMAGeCK}
+  %\VignetteIndexEntry{Analysing single-cell CRISPR screens with scMAGeCK}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}
@@ -19,31 +23,43 @@ scMAGeCK is a computational model to identify genes associated with multiple exp
 
 scMAGeCK is based on our previous [MAGeCK](http://mageck.sourceforge.net) and MAGeCK-VISPR models for pooled CRISPR screens, but further extends to scRNA-seq as the readout of the screening experiment. scMAGeCK consists of two modules: scMAGeCK-Robust Rank Aggregation (RRA), a sensitive and precise algorithm to detect genes whose perturbation links to one single marker expression; and scMAGeCK-LR, a linear-regression based approach that unravels the perturbation effects on thousands of gene expressions, especially from cells undergo multiple perturbations.
 
+## Installation
+
+scMAGeCK is distributed through Bioconductor and is installed with
+`BiocManager`:
+
+```{r install, eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
+BiocManager::install("scMAGeCK")
+```
+
+The RRA algorithm is compiled into the package, so no external executable or
+separate toolchain setup is required.
+
+```{r load}
+library(scMAGeCK)
+```
+
 ## Usage
 
 ### scmageck_rra
 
 ```{r rra-example}
-    library(scMAGeCK)
-    ### BARCODE file contains cell identity information, generated from the cell identity collection step
-    BARCODE <- system.file("extdata","barcode_rec.txt",package = "scMAGeCK")
-    
-    ### RDS can be a Seurat object or local RDS file path that contains the scRNA-seq dataset
-    RDS <- system.file("extdata","singles_dox_mki67_v3.RDS",package = "scMAGeCK")
-    
-    ### Set RRA executable file path. 
-    ###    You can generate RRA executable file by following commands:
-    ###        wget https://bitbucket.org/weililab/scmageck/downloads/RRA_0.5.9.zip
-    ###        unzip RRA_0.5.9.zip
-    ###        cd RRA_0.5.9
-    ###        make
-    RRAPATH <- "/Library/RRA_0.5.9/bin/RRA"
-    
-    target_gene <- "MKI67"
-    
-    rra_result <- scmageck_rra(BARCODE=BARCODE, RDS=RDS, GENE=target_gene, RRAPATH=RRAPATH, 
-             LABEL='dox_mki67', NEGCTRL=NULL, KEEPTMP=FALSE, PATHWAY=FALSE, SAVEPATH=NULL)
-    
+### The BARCODE file holds the cell identity information produced by the
+### cell-identity collection step.
+BARCODE <- system.file("extdata", "barcode_rec.txt", package = "scMAGeCK")
+
+### RDS may be a Seurat object, or the path to an RDS file holding one. The
+### dataset is expected to be normalised and scaled already.
+RDS <- system.file("extdata", "singles_dox_mki67_v3.RDS", package = "scMAGeCK")
+
+target_gene <- "MKI67"
+
+rra_result <- scmageck_rra(BARCODE = BARCODE, RDS = RDS, GENE = target_gene,
+                           LABEL = "dox_mki67", NEGCTRL = NULL,
+                           KEEPTMP = FALSE, PATHWAY = FALSE, SAVEPATH = NULL)
 ```
 
 ### scmageck_lr
@@ -68,10 +84,11 @@ scMAGeCK is based on our previous [MAGeCK](http://mageck.sourceforge.net) and MA
 
 The scmageck_rra function will output the ranking and p values of each perturbed genes, using the RRA program in MAGeCK. Users familiar with the MAGeCK program may find it similar with the [gene_summary](https://sourceforge.net/p/mageck/wiki/output/#gene_summary_txt) output in MAGeCK.
 
-Here is the example output of scMAGeCK-RRA:
+Here is the output of the call above:
 
-    Row.names  items_in_group.low  lo_value.low  p.low  FDR.low goodsgrna.low  items_in_group.high  lo_value.high  p.high  FDR.high  goodsgrna.high
-    TP53    271     0.11832 0.95619 1       48      271     1.014e-83       4.9975e-06      0.00015 184
+```{r rra-result}
+head(rra_result)
+```
 
 Explanations of each column are below:
 
@@ -109,7 +126,9 @@ The format of score.txt and score.pval.txt is a simple table file with rows corr
 This row records the effects of perturbing APC gene on the expressions of APC, ARID1A, TP53 and MKI67.
 
 ## Contact us
-Questions? Comments? Join the [MAGeCK Google group](https://groups.google.com/forum/?hl=en#!forum/mageck) or email us (<wli2@childrensnational.org>) directly.
+Questions? Comments? Open an issue on the
+[scMAGeCK issue tracker](https://github.com/weili-lab/scMAGeCK/issues), or join
+the [MAGeCK Google group](https://groups.google.com/forum/?hl=en#!forum/mageck).
 
 Any advice and suggestions will be greatly appreciated.
 

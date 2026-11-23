@@ -4,7 +4,8 @@
 Use RRA to test the association of gene knockout with certain marker expression
 }
 \description{
-echo "Use RRA to test the association of gene knockout with certain marker expression"
+Use Robust Rank Aggregation (RRA) to test whether perturbing a gene is
+associated with the expression of a given marker gene or gene signature.
 }
 \usage{
 scmageck_rra(BARCODE, RDS, GENE, RRAPATH = NULL, LABEL = NULL, NEGCTRL = NULL, 
@@ -25,8 +26,10 @@ Genes whose expressions are to be tested. Multiple genes can be provided,
 separated by ",". For example, "MKI67,TP53"
 }
   \item{RRAPATH}{
-The path to the RRA program, if RRA cannot be found in the PATH environment variable.
-Depreciated in 1.5.1.
+Deprecated and retained only for backward compatibility. Since version 1.5.1
+the RRA algorithm is built into the package through Rcpp, so no external
+executable is needed. A path supplied here that does not exist on disk is
+ignored and the built-in implementation is used.
 }
   \item{LABEL}{
 The label of the output file.
@@ -51,16 +54,16 @@ Method used to assign the sgRNA identity to each cell. Can be either unique or l
 See assign_cell_identity for more details.
 }
   \item{SIGNATURE}{
-A GMT text file, the format must be as follows:(1)Column 1: name of gene set;
-(2)Colum 2: Empty, or the information about gene set e.g. the source of the gene set;
-(3)Column 3 and onwards: ids of genes beloging to a particular gene set. 
+A GMT text file. The format must be as follows: (1) Column 1: name of gene set;
+(2) Column 2: empty, or information about the gene set, e.g. its source;
+(3) Column 3 and onwards: ids of genes belonging to a particular gene set. 
 Note that if you don't set the parameter "SAVEPATH", this parameter would create a 
 folder called "GENE_SET"" in the current working directory to store the results from 
 applying RRA program to do gene set analysis.
-Refercence:http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats
+Reference: http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats
 }
  \item{SLOT}{
-Use the slot in Seurat object for plot. May choose 'data', 'scale.data' or 'count'. See GetAssayData funciton in Seurat.
+Use the slot in Seurat object for plot. May choose 'data', 'scale.data' or 'counts'. See GetAssayData function in Seurat.
 }
 }
 \value{
@@ -74,13 +77,9 @@ A data frame of RRA results.
     RDS <- system.file("extdata","singles_dox_mki67_v3.RDS",package = "scMAGeCK")
 
     target_gene <- "MKI67"
-    ### Set RRA executable file path or activate scmageck env if needed (see https://bitbucket.org/weililab/scmageck/src/master/)
-    RRAPATH <- NULL
-    
-    rra_result <- scmageck_rra(BARCODE=BARCODE, RDS=RDS, GENE=target_gene, 
-                               RRAPATH=RRAPATH, LABEL='dox_mki67', 
-                               NEGCTRL=NULL, KEEPTMP=FALSE, SIGNATURE = NULL, 
-                               PATHWAY=FALSE, SAVEPATH=NULL)
+    rra_result <- scmageck_rra(BARCODE=BARCODE, RDS=RDS, GENE=target_gene,
+                               LABEL='dox_mki67', NEGCTRL=NULL, KEEPTMP=FALSE,
+                               SIGNATURE=NULL, PATHWAY=FALSE, SAVEPATH=NULL)
     head(rra_result)
 }
 

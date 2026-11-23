@@ -1,7 +1,7 @@
 \name{pre_processRDS}
 \alias{pre_processRDS}
 \title{
-Integrate the imformation of sgRNA into RDS file for the further analysis.
+Integrate sgRNA information into a Seurat object for downstream analysis
 }
 \description{
 Pre-process the sgRNA count from previous step, and generate the sgRNA expression matrix.

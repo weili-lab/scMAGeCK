@@ -37,12 +37,8 @@ Maintainer: \packageMaintainer{scMAGeCK}
     
     target_gene <- "MKI67"
     
-    ### Set RRA executable file path or activate scmageck env if needed (see https://bitbucket.org/weililab/scmageck/src/master/)
-    RRAPATH <- NULL
-    
-    rra_result <- scmageck_rra(BARCODE=BARCODE, RDS=RDS, GENE=target_gene, 
-                               RRAPATH=RRAPATH, LABEL='dox_mki67', 
-                               NEGCTRL=NULL, KEEPTMP=FALSE, 
+    rra_result <- scmageck_rra(BARCODE=BARCODE, RDS=RDS, GENE=target_gene,
+                               LABEL='dox_mki67', NEGCTRL=NULL, KEEPTMP=FALSE,
                                PATHWAY=FALSE, SAVEPATH=NULL)
     head(rra_result)
     

@@ -1,10 +1,11 @@
 Package: scMAGeCK
 Type: Package
 Title: Identify genes associated with multiple expression phenotypes in single-cell CRISPR screening data
-Version: 0.99.1
-Date: 2026-07-09
+Version: 0.99.2
+Date: 2026-11-23
 Authors@R: c(
-    person("Wei", "Li", email = "li.david.wei@gmail.com", role = c("aut", "cre")),
+    person("Wei", "Li", email = "li.david.wei@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-2163-7903")),
     person("Xiaolong", "Cheng", email = "xiaolongcheng1120@gmail.com", role = "aut"),
     person("Lin", "Yang", role = "aut"))
 Description: scMAGeCK is a computational model to identify genes associated
@@ -21,7 +22,8 @@ URL: https://github.com/weili-lab/scMAGeCK
 BugReports: https://github.com/weili-lab/scMAGeCK/issues
 biocViews: CRISPR, SingleCell, RNASeq, Sequencing, PooledScreens, Transcriptomics, GeneExpression, Regression
 NeedsCompilation: yes
+Depends: R (>= 4.6.0)
 Imports: Seurat (>= 5.0.0), ggplot2, stats, utils, methods, graphics, grDevices, Rcpp
 LinkingTo: Rcpp
-Suggests: knitr, rmarkdown
+Suggests: knitr, rmarkdown, BiocStyle
 VignetteBuilder: knitr

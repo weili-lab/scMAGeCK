@@ -1,19 +1,78 @@
-importFrom("stats", "runif")
-importFrom("utils", "read.table", "write.table")
-importFrom("stats", "ks.test", "p.adjust", "quantile")
-importFrom("utils", "combn")
+# Exported interface -------------------------------------------------------
+
+export(assign_cell_identity)
+export(featurePlot)
+export(guidematrix_to_triplet)
+export(pre_processRDS)
+export(read_gmt_file)
+export(scmageck_best_lambda)
+export(scmageck_eff_estimate)
 export(scmageck_lr)
 export(scmageck_rra)
-export(pre_processRDS)
-export(featurePlot)
 export(selectPlot)
-export(assign_cell_identity)
-export(guidematrix_to_triplet)
-export(read_gmt_file)
-export(scmageck_eff_estimate)
-export(scmageck_best_lambda)
-import(Seurat)
-import(ggplot2)
-import(utils)
-useDynLib(scMAGeCK, .registration=TRUE)
+
+# Imports ------------------------------------------------------------------
+#
+# Selective importFrom() rather than import(): blanket imports of Seurat,
+# ggplot2 and utils attached several hundred names, which makes it impossible
+# to tell what the package actually depends on and risks masking base
+# functions. The lists below were derived from the symbols used in
+# call position in R/, so they are what the package needs and nothing more.
+
 importFrom(Rcpp, evalCpp)
+
+importFrom(Seurat,
+           AddMetaData,
+           as.sparse,
+           Cells,
+           CreateAssayObject,
+           DefaultAssay,
+           FeaturePlot,
+           FetchData,
+           FindMarkers,
+           GetAssayData,
+           Idents,
+           NormalizeData,
+           Reductions,
+           ScaleData,
+           UpdateSeuratObject)
+
+importFrom(ggplot2,
+           aes,
+           after_stat,
+           coord_flip,
+           element_blank,
+           element_text,
+           geom_bar,
+           geom_col,
+           geom_density2d,
+           geom_hline,
+           geom_point,
+           geom_text,
+           geom_violin,
+           geom_vline,
+           ggplot,
+           ggtitle,
+           labs,
+           margin,
+           position_jitter,
+           scale_color_gradientn,
+           scale_fill_brewer,
+           scale_y_log10,
+           stat_ecdf,
+           stat_summary,
+           theme,
+           theme_bw,
+           theme_classic,
+           xlab,
+           xlim,
+           ylab,
+           ylim)
+
+importFrom(stats, p.adjust, quantile, runif)
+
+importFrom(utils, combn, read.delim, read.table, write.table)
+
+# Compiled code ------------------------------------------------------------
+
+useDynLib(scMAGeCK, .registration = TRUE)
