@@ -4,7 +4,8 @@
 Use linear regression to test the association of gene knockout with all possible genes
 }
 \description{
-echo "Use linear regression to test the association of gene knockout with all possible genes"
+Use linear regression to estimate the effect of each perturbation on the
+expression of every gene in the dataset.
 }
 \usage{
 scmageck_lr(BARCODE, RDS, NEGCTRL, SELECT_GENE=NULL, LABEL = NULL,  
@@ -48,14 +49,14 @@ and only keep genes whose expression is greater than zero in at least that fract
 Default: 0.01.
 }
   \item{SIGNATURE}{
-A GMT text file, the format must be as follows:(1)Column 1: name of gene set; 
-(2)Colum 2: Empty, or the information about gene set e.g. the source of the gene set; 
-(3)Column 3 and onwards: ids of genes beloging to a particular gene set. 
+A GMT text file. The format must be as follows: (1) Column 1: name of gene set; 
+(2) Column 2: empty, or information about the gene set, e.g. its source; 
+(3) Column 3 and onwards: ids of genes belonging to a particular gene set. 
 Note that this parameter for applying LR model for the gene set analysis.
-Refercence:http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats
+Reference: http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats
 }
  \item{SLOT}{
-Use the slot in Seurat object for plot. May choose 'data', 'scale.data' or 'count'. See GetAssayData funciton in Seurat.
+Use the slot in Seurat object for plot. May choose 'data', 'scale.data' or 'counts'. See GetAssayData function in Seurat.
 }
 }
 \value{

@@ -1,7 +1,7 @@
 \name{guidematrix_to_triplet}
 \alias{guidematrix_to_triplet}
 \title{
-Convert guide matrix into a dataframe containing cell, barcode, read and UMI count.
+Convert a guide matrix into a cell, barcode, read and UMI count data frame
 }
 \description{
 Convert guide matrix into a dataframe, where columns include cell, barcode, 

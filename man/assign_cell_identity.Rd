@@ -1,7 +1,7 @@
 \name{assign_cell_identity}
 \alias{assign_cell_identity}
 \title{
-Assign single cell identity to genes to be perturbed. 
+Assign single-cell identity to the genes being perturbed
 }
 \description{
 assign the identity of single cells, by adding a gene column to the metadata.

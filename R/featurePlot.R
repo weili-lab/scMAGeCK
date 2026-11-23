@@ -192,7 +192,7 @@ featurePlot <- function(RDS, TYPE = plot.type, BARCODE = NULL, sgRNA = NULL, GEN
         da_1 <- da_1[-4]
         data <- merge(da_1, grna, by = 0, all = FALSE)
         if (nrow(data) >= num) {
-          p <- ggplot(data, aes(UMAP_1, UMAP_2, z = data[[5]])) + geom_density2d(aes(colour = stat(level))) + 
+          p <- ggplot(data, aes(UMAP_1, UMAP_2, z = data[[5]])) + geom_density2d(aes(colour = after_stat(level))) + 
             scale_color_gradientn(colours = colfunc(4)) + ggtitle(paste("Density of sgRNAs")) + theme_bw()
           p + theme(axis.text = element_text(size = axis.size)) + theme(title = element_text(size = title.size)) + 
             theme(legend.text = element_text(size = legend.text)) 

@@ -1,7 +1,7 @@
 \name{read_gmt_file}
 \alias{read_gmt_file}
 \title{
-Read a gene set file in GMT format.
+Read a gene set file in GMT format
 }
 \description{
 Read a gene set file in the Broad Institute GMT format, where each line

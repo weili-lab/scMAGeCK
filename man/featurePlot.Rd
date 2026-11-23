@@ -1,8 +1,7 @@
 \name{featurePlot}
 \alias{featurePlot}
 \title{
-Detect the sgRNA distribution and generate Vlnplot to identity gene regulation between
-different cells.
+Plot the sgRNA distribution and gene regulation across cells
 }
 \description{
 identify how many sgRNAs entered the cells, visualize the counts of sgRNAs distribution and
@@ -44,7 +43,7 @@ Set up the gene name as the control group. it would compare gene
 expression across the dataset when GROUP2= NULL.
 }
  \item{SLOT}{
-Use the slot in Seurat object for plot. May choose 'data', 'scale.data' or 'count'. See GetAssayData funciton in Seurat.
+Use the slot in Seurat object for plot. May choose 'data', 'scale.data' or 'counts'. See GetAssayData function in Seurat.
 }
   \item{palette}{
 The color palette to change the color of VlnPlot.
